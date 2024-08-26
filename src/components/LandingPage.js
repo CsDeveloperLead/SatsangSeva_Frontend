@@ -10,7 +10,7 @@ const contentArray = [
     index: 0,
     imgSrc: "/assets-2@2x.png",
     heading: "Get yourself into the Real cause of Your Life",
-    description: "Look no further! Our SBS The Show tickets are the simplest way for you to experience a live Kpop recording.",
+    description: "Join us in the journey of spiritual enlightenment, where every word, melody, and moment brings you closer to inner peace.",
   },
   {
     index: 1,

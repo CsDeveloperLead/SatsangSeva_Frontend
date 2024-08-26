@@ -50,7 +50,7 @@ const Footer = ({
             </div>
             <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0 pl-1 box-border max-w-full text-sm text-whitesmoke-200 font-montserrat">
               <div className="flex-1 relative leading-[160%] inline-block max-w-full z-[1]">
-                Eventick is a global self-service ticketing platform for live
+                Satsang Seva is a global self-service ticketing platform for live
                 experiences that allows anyone to create, share, find and attend
                 events that fuel their passions and enrich their lives.
               </div>

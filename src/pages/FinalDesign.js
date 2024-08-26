@@ -45,7 +45,7 @@ const FinalDesign = () => {
                   Blogs
                 </h1>
               </div>
-              <div className="relative text-lg leading-[150%] font-dm-sans text-dimgray">{`Lorem ipsum dolor sit amet, consectetur adipiscing elit. `}</div>
+              <div className="relative text-lg leading-[150%] font-dm-sans text-dimgray">{`Reach a global community of spiritual seekers.`}</div>
             </div>
           </div>
           <div className="self-stretch flex flex-row items-start justify-evenly gap-[28.5px] max-w-full flex-wrap mq750:flex-wrap mq1050:justify-center mq1050:flex-basis-[50%]">
