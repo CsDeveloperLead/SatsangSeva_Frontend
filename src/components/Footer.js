@@ -33,7 +33,7 @@ const Footer = ({ className = "" }) => {
 
             <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0 pl-1 box-border max-w-full text-sm text-white font-montserrat">
               <div className="flex-1 relative leading-[160%] inline-block max-w-full z-[1]">
-                Eventick is a global self-service ticketing platform for live
+                SatsangSeva is a global self-service ticketing platform for live
                 experiences that allows anyone to create, share, find and attend
                 events that fuel their passions and enrich their lives.
               </div>
@@ -61,7 +61,7 @@ const Footer = ({ className = "" }) => {
             </div>
             <div className="flex flex-col items-start justify-start gap-[23px]">
               <b className="relative capitalize inline-block min-w-[77px] z-[1]">
-                Eventick
+                SatsangSeva
               </b>
               <div className="relative text-sm leading-[200%] font-medium text-white z-[1]">
                 <p className="m-0"><Link className="text-white no-underline" to="/aboutus">About Us</Link></p>
