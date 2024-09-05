@@ -34,7 +34,11 @@ const CreateEvents = ({
           {listYourOwnEvent}
         </h1>
         <div className="create-events-description">
+<<<<<<< HEAD
           <p className="text-xl">Create and list your Satsang event to connect <br/> with like-minded souls. </p>
+=======
+          <p>Create & list your event to connect <br/> with like-minded souls. </p>
+>>>>>>> 2056c635d52b825ffe7718ceb8ba237cd84f7cf4
         </div>
         <Button
           className="create-events-button"

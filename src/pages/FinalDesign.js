@@ -39,7 +39,7 @@ const FinalDesign = () => {
       <section style={{ width: "100vw" }} className="flex flex-row items-start justify-center pt-5 px-5 pb-5 box-border max-w-full shrink-0 text-left text-21xl text-darkorange-200 font-montserrat mq750:!pt-3">
         <div className="w-[1086px] flex flex-col items-end justify-start gap-[48.5px] max-w-full mq750:gap-[24px]">
           <div className="self-stretch flex flex-row items-start justify-center py-0 pr-5 pl-[22px] box-border max-w-full">
-            <div className="w-[464px] flex flex-col items-start justify-center gap-[20px] max-w-full">
+            <div className="w-[464px] flex flex-col items-center justify-start gap-[20px] max-w-full">
               <div className="self-stretch flex flex-row items-start justify-center py-0 pr-5 pl-[31px]">
                 <h1 className="m-0 relative text-inherit font-bold font-inherit inline-block min-w-[97px] mq1050:text-13xl mq450:text-5xl">
                   Blogs
