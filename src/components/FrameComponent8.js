@@ -192,7 +192,7 @@ const FrameComponent8 = ({ className = "" }) => {
               {/* <label htmlFor="userType">User Type: </label> */}
               <select className="form-control" value={formData.userType} onChange={onInputChange} name="userType">
                 <option value="Host&Participant">Host & Participant</option>
-                <option value="Host">Host</option>
+                <option value="Host">Participant</option>
               </select>
             </div>
             <TextField
