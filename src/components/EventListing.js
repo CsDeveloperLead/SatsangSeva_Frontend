@@ -287,7 +287,7 @@ const EventListing = ({ className = "" }) => {
                     date={e.startDate}
                     endDate={e.endDate}
                     address={e.eventAddress}
-                    className="rounded-[20px] shadow-lg hover:scale-95 transition-transform"
+                    className="rounded-[20px] shadow-lg hover:scale-110 transition-transform"
                   />
                 ))}
               </div>

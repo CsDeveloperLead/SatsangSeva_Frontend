@@ -308,7 +308,7 @@ const EventListing1 = () => {
   }
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/jpeg, image/png, image/jpg',
+    accept: 'image/jpeg, image/png, image/jpg, images/jfif',
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
@@ -513,7 +513,7 @@ const EventListing1 = () => {
                         const newImages = Array.from(files);
                         setFormValues((prevValues) => ({ ...prevValues, eventImages: newImages }));
                       }}
-                        accept=".jpeg, .jpg, .png, .webp" placeholder="Select Event Images" multiple />
+                        accept=".jpeg, .jpg, .png, .webp, .jfif" placeholder="Select Event Images" multiple />
                     </div>
                     {/* <div className="self-stretch flex flex-col items-start justify-start gap-[4px] max-w-full">
                       <div className="self-stretch relative leading-[20px] font-medium">
