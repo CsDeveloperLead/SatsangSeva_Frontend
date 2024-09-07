@@ -28,6 +28,7 @@ import Blog from "./admin/Blog";
 import AdminLayout from "./admin/AdminLayout";
 import AdminLogin from "./admin/AdminLogin";
 import GoogleTranslate from "./components/GoogleTranslate";
+import Terms from "./components/Terms";
 
 function App() {
   const action = useNavigationType();
@@ -136,6 +137,7 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/blog" element={<Blogs />} />
+        <Route path="/terms" element={<Terms/>}/>
         {/* <Route path="/nearby" element={<NearBy />} /> */}
         {/* <Route path="/upcard" element={<Upcard />} /> */}
         {/* <Route path="/live" element={<LiveEvent />} /> */}

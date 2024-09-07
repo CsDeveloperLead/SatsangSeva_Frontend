@@ -117,6 +117,11 @@ const Footer = ({ className = "" }) => {
                   </Link>
                 </p>
                 <p className="m-0">
+                  <Link className="text-white no-underline" to="/terms">
+                    Terms & Conditions
+                  </Link>
+                </p>
+                <p className="m-0">
                   <Link
                     className="text-white no-underline"
                     to="/aboutus#howitworks"

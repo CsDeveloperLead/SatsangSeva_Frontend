@@ -5,7 +5,6 @@ import FirstFold1 from "../components/FirstFold1";
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import axios from "axios";
-import Select from "react-select";
 import { Country, State, City } from "country-state-city";
 import { useDropzone } from "react-dropzone";
 import Loader from "../components/Loader";
