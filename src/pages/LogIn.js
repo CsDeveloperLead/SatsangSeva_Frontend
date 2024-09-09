@@ -13,6 +13,8 @@ import Loader from '../components/Loader';
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { Modal, Button as Btn } from "react-bootstrap";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
   const url = process.env.REACT_APP_BACKEND;
