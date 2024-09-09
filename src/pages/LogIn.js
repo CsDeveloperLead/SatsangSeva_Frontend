@@ -207,7 +207,7 @@ const LogIn = () => {
             <div className="self-stretch flex flex-col items-start justify-start gap-[22px]">
               <div className="self-stretch flex flex-col items-center justify-center gap-[15px]">
                 <div className="self-stretch flex flex-row items-start justify-between gap-[20px] mq450:flex-wrap">
-                  <div className="flex flex-col items-start justify-start gap-[11px]">z
+                  <div className="flex flex-col items-start justify-start gap-[11px]">
                     <div className="relative z-[7] mq450:text-[17px]">
                       <span>{`Welcome to `}</span>
                       <span className="text-orangered">Satsang Seva</span>
