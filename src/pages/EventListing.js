@@ -145,19 +145,15 @@ const EventListing1 = () => {
   function calculateDuration() {
     const startDate = new Date(formValues.startDate);
     const endDate = new Date(formValues.endDate);
-
-    const duration = endDate.getTime() - startDate.getTime();
-
-    const days = Math.floor(duration / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-
-    let durationText = `${hours} hours, ${minutes} minutes long event.`;
-    if (days > 0) {
-      durationText = days + " days, " + durationText;
-    }
+  
+    // Calculate the difference in time and add 1 day (to include the end date)
+    const durationInMs = endDate.getTime() - startDate.getTime();
+    const days = Math.ceil(durationInMs / (1000 * 60 * 60 * 24)) + 1;
+  
+    // Create the output string
+    let durationText = `${days} day${days > 1 ? 's' : ''} long event.`;
+  
+    // Set the calculated duration
     setDuration(durationText);
   }
 

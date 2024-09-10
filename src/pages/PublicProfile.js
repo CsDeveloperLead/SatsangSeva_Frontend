@@ -77,8 +77,8 @@ const PublicProfile = () => {
       <main style={{ width: "100vw" }} className="flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
         <section className="w-[1256px] flex flex-col items-start justify-start max-w-full text-left text-21xl text-black font-poppins mq750:gap-[18px]">
           <div className="w-[1229px] flex flex-row items-start justify-start py-0 px-3.5 box-border max-w-full text-xs">
-            <div className="flex-1 flex flex-row items-start justify-between max-w-full gap-[20px] mq750:!justify-end mq1050:flex-wrap">
-              <div className="w-[750px] flex flex-col items-start justify-start pt-px px-0 pb-0 box-border max-w-full">
+            <div className="flex-1 flex flex-col items-start justify-between max-w-full gap-[20px] mq750:!justify-end mq1050:flex-wrap">
+              <div className="w-full flex justify-between pt-px px-0 pb-0 box-border">
                 <div className="self-stretch flex flex-row items-center justify-between max-w-full gap-[20px] mq750:flex-wrap">
                   {userData && userData.profile ? (
                     <img className="profile-icon" src={userData.profile} alt="Profile Image" />
@@ -101,12 +101,7 @@ const PublicProfile = () => {
                     </div> */}
                   </div>
                 </div>
-                <div style={{fontSize: "1rem"}} className="self-stretch relative text-justify pt-5">
-                  {(userData && userData.desc) ? <h5>About: </h5> : ""}
-                  {(userData && userData.desc) ? userData.desc : ""}
-                </div>
-              </div>
-              <div className="w-28 flex flex-col items-end justify-start gap-[45.6px]">
+                <div className="w-28 md:flex flex-col items-end justify-start gap-[45.6px] mq450:hidden">
                 <div onClick={() => { navigator.clipboard.writeText(window.location.href); alert("Public Profile URL Copied to Clipboard! ") }} title="Copy Public URL" className="w-[26px] cursor-pointer rounded-8xs box-border flex flex-col items-start justify-start py-[3px] px-1 border-[1px] border-solid border-chocolate">
                   <img
                     className="w-4 h-[14.4px] relative"
@@ -179,6 +174,89 @@ const PublicProfile = () => {
                   </div>
                 </div>
               </div>
+               
+              </div>
+              <div style={{fontSize: "1rem"}} className="self-stretch relative text-justify pt-5">
+                  {(userData && userData.desc) ? <h5>About: </h5> : ""}
+                  {(userData && userData.desc) ? userData.desc : ""}
+                </div>
+              
+                <div className="w-full mq450:flex justify-center hidden">
+                <div className="w-28 flex flex-col justify-center items-center  gap-[45.6px] ">
+                <div onClick={() => { navigator.clipboard.writeText(window.location.href); alert("Public Profile URL Copied to Clipboard! ") }} title="Copy Public URL" className="w-[26px] cursor-pointer rounded-8xs box-border flex flex-col items-start justify-start py-[3px] px-1 border-[1px] border-solid border-chocolate">
+                  <img
+                    className="w-4 h-[14.4px] relative"
+                    alt=""
+                    src="/vector-6.svg"
+                  />
+                </div>
+                <div className="self-stretch flex flex-col items-start justify-start gap-[12px]">
+                  <div className="self-stretch flex flex-row items-start justify-end">
+                    <div className="relative inline-block min-w-[70px]">
+                      Contact On
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-end justify-start gap-[14px]">
+
+                    <div className="flex flex-col items-start justify-start gap-[12px]">
+                      <div className="flex flex-row items-start justify-start py-0 px-0.5">
+                        <a href={userData ? "tel:+91" + userData.phoneNumber : "#"}>
+                          <img
+                            className="h-6 w-6 relative overflow-hidden shrink-0"
+                            loading="lazy"
+                            alt=""
+                            src="/phone.svg"
+                          />
+                        </a>
+                      </div>
+                      <a href={userData && userData.social[0] ? userData.social[0].link : null} target="_blank" rel="noopener noreferrer">
+                        <img
+                          className="w-7 h-7 relative overflow-hidden shrink-0"
+                          loading="lazy"
+                          alt=""
+                          src="/facebook1.svg"
+                        />
+                      </a>
+                    </div>
+                    <div className="flex flex-col items-start justify-start gap-[12px]">
+                      <a href={userData ? "mailto:" + userData.email : "#"}>
+                        <img
+                          className="w-7 h-7 relative"
+                          loading="lazy"
+                          alt=""
+                          src="/mail.svg"
+                        />
+                      </a>
+                      <a href={userData && userData.social[2] ? userData.social[2].link : null} target="_blank" rel="noopener noreferrer">
+                        <img
+                          className="w-7 h-7 relative overflow-hidden shrink-0"
+                          loading="lazy"
+                          alt=""
+                          src="/twitterx.svg"
+                        />
+                      </a>
+                    </div>
+                    <div className="flex flex-col items-start justify-start gap-[12px]">
+                      <img
+                        className="w-[25px] h-7 relative overflow-hidden shrink-0"
+                        loading="lazy"
+                        alt=""
+                        src="/iconsmappin-1.svg"
+                      />
+                      <a href={userData && userData.social[1] ? userData.social[1].link : null} target="_blank" rel="noopener noreferrer">
+                        <img
+                          className="w-7 h-7 relative overflow-hidden shrink-0"
+                          loading="lazy"
+                          alt=""
+                          src="/instagram.svg"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                </div>
+             
             </div>
           </div>
           <div style={{ width: "100vw" }} className=" flex flex-col items-end justify-center pt-0 px-0 box-border gap-[20px] max-w-full lg:gap-[41px] lg:pb-[67px] lg:box-border mq750:gap-[20px] mq750:pb-11 mq750:box-border">

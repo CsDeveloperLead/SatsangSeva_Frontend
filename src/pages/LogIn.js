@@ -332,8 +332,8 @@ const LogIn = () => {
               {"Log in"}
             </Button>
             <div onClick={() => { navigate('/sign-in') }} className="flex cursor-pointer">
-              <p className="m-0">No Account ? </p>
-              <p className="m-0 text-cornflowerblue"> Sign up</p>
+              <p className="m-0">No Account? &nbsp;</p>
+              <p className="m-0 text-cornflowerblue">Sign up</p>
             </div>
           </div>
         </div>
