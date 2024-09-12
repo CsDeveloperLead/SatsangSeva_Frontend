@@ -699,12 +699,13 @@ const EventListing1 = () => {
                       </div>
                       <textarea
                         maxLength={5000}
-                        className="form-control min-h-[600px]"
+                        className="form-control"
                         type="text"
                         name="eventDesc"
                         value={formValues.eventDesc}
                         onChange={handleInputChange}
                         placeholder="Enter Event Description (Max-5000 Characters.)"
+                        style={{height: "83px"}}
                       />
                       <p className="mt-2">
                         {maxLength - formValues.eventDesc.length} characters
