@@ -9,7 +9,7 @@ import Select from "react-select";
 import { Country, State, City } from "country-state-city";
 import { useDropzone } from "react-dropzone";
 import Loader from "../components/Loader";
-import makeAnimated from 'react-select/animated';
+import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
@@ -40,6 +40,7 @@ const EventListing1 = () => {
   const navigate = useNavigate();
   // const [geoCoordinates, setGeoCoordinates] = useState([]);
   const [duration, setDuration] = useState(null);
+  const [duration2, setDuration2] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(
     Country.getCountryByCode("IN")
   );
@@ -100,6 +101,12 @@ const EventListing1 = () => {
     }
   }, [formValues.startDate, formValues.endDate]);
 
+  useEffect(() => {
+    if (formValues.startTime !== "" && formValues.endTime !== "") {
+      calculateDuration2();
+    }
+  }, [formValues.startTime, formValues.endTime]);
+
   // const fetchGeoCodes = async () => {
   //   await axios.get(`https://nominatim.openstreetmap.org/search.php?q=${formValues.pinCode}&countrycodes=In&format=geojson`)
   //     .then((resp) => {
@@ -133,6 +140,26 @@ const EventListing1 = () => {
       return [];
     }
   };
+  const [validationError, setValidationError] = useState("");
+
+  const handleInputChange2 = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "hostContactNumber") {
+      const numbers = value.split(",").map((num) => num.trim());
+
+      // Validate that all numbers are 10 digits
+      const allValid = numbers.every((num) => /^\d{10}$/.test(num));
+
+      if (!allValid) {
+        setValidationError(
+          "Please enter valid 10-digit contact numbers separated by commas."
+        );
+      } else {
+        setValidationError("");
+      }
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -142,19 +169,36 @@ const EventListing1 = () => {
     });
   };
 
+  const maxLength = 5000;
+
   function calculateDuration() {
     const startDate = new Date(formValues.startDate);
     const endDate = new Date(formValues.endDate);
-  
+
     // Calculate the difference in time and add 1 day (to include the end date)
     const durationInMs = endDate.getTime() - startDate.getTime();
-    const days = Math.ceil(durationInMs / (1000 * 60 * 60 * 24)) + 1;
-  
+    const days = Math.ceil(durationInMs / (1000 * 60 * 60 * 24));
+
     // Create the output string
-    let durationText = `${days} day${days > 1 ? 's' : ''} long event.`;
-  
+    let durationText = `${days} day${days > 1 ? "s" : " and"} `;
+
     // Set the calculated duration
     setDuration(durationText);
+  }
+
+  function calculateDuration2() {
+    const startTime = formValues.startTime;
+    const endTime = formValues.endTime;
+
+    const start = new Date(`01/01/2007 ${startTime}`);
+    const end = new Date(`01/01/2007 ${endTime}`);
+
+    const diff = end - start;
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    let duration2Text = `(${hours} hours ${minutes} minutes Each day)`;
+    setDuration2(duration2Text);
   }
 
   const handleSubmit = async (e) => {
@@ -218,6 +262,7 @@ const EventListing1 = () => {
       startDate: formValues.startDate,
       endDate: formValues.endDate,
     };
+    console.log(newData);
     const error = validateEventInputs(newData);
     localStorage.setItem("addEvent", JSON.stringify(formValues));
     if (!error) {
@@ -231,12 +276,14 @@ const EventListing1 = () => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       };
+      console.log(headers);
       const formData = new FormData();
       formData.append("eventData", JSON.stringify(newData));
       formData.append("images", eventPoster);
       formValues.eventImages.slice(0, 3).forEach((image) => {
         formData.append("images", image);
       });
+      console.log(formData);
       await axios
         .post(url + "/events", formData, { headers })
         .then((resp) => {
@@ -280,6 +327,14 @@ const EventListing1 = () => {
     ) {
       errors.eventCategory =
         "Event category is required and must be a non-empty string";
+    }
+
+    if (
+      !inputs.hostWhatsapp ||
+      typeof inputs.hostWhatsapp !== "string" ||
+      inputs.hostWhatsapp.length !== 10
+    ) {
+      errors.hostWhatsapp = "Host WhatsApp number must be of 10 Digits";
     }
 
     if (
@@ -329,14 +384,6 @@ const EventListing1 = () => {
       inputs.hostName.trim() === ""
     ) {
       errors.hostName = "Host name is required and must be a non-empty string";
-    }
-
-    if (
-      !inputs.hostWhatsapp ||
-      typeof inputs.hostWhatsapp !== "string" ||
-      inputs.hostWhatsapp.length !== 10
-    ) {
-      errors.hostWhatsapp = "Host WhatsApp number must be of 10 Digits";
     }
 
     if (
@@ -518,13 +565,19 @@ const EventListing1 = () => {
                         <span className="whitespace-pre-wrap">{`Event Category  `}</span>
                         <span className="text-red">*</span>
                       </div>
-                      <Select
-                        closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        isMulti
-                        options={categories}
-                        className="w-full"
-                      />
+                      <select
+                        className="form-control"
+                        name="eventCategory"
+                        value={formValues.eventCategory}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select Category</option>
+                        {categories.map((category) => (
+                          <option key={category.value} value={category.value}>
+                            {category.label}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="self-stretch flex flex-col items-start justify-start gap-[4px] max-w-full">
                       <div className="self-stretch flex flex-row items-start justify-start max-w-full">
@@ -613,7 +666,7 @@ const EventListing1 = () => {
                     </div>
                     <div className="self-stretch flex flex-col items-start justify-start gap-[4px]">
                       <div className="self-stretch relative leading-[20px] font-medium">
-                        <span>{`Host Contact Number (Whatsapp) `}</span>
+                        <span>{`Host Contact Number (Whatsapp)`}</span>
                         <span className="text-red">*</span>
                       </div>
                       <input
@@ -645,14 +698,18 @@ const EventListing1 = () => {
                         <span className="text-red">*</span>
                       </div>
                       <textarea
-                        maxLength={500}
-                        className="form-control"
+                        maxLength={5000}
+                        className="form-control min-h-[600px]"
                         type="text"
                         name="eventDesc"
                         value={formValues.eventDesc}
                         onChange={handleInputChange}
-                        placeholder="Enter Event Description (Max-500 Characters.)"
+                        placeholder="Enter Event Description (Max-5000 Characters.)"
                       />
+                      <p className="mt-2">
+                        {maxLength - formValues.eventDesc.length} characters
+                        remaining
+                      </p>
                     </div>
                     <div className="self-stretch flex flex-col items-start justify-start gap-[4px]">
                       <div className="self-stretch relative leading-[20px] font-medium">
@@ -861,11 +918,11 @@ const EventListing1 = () => {
                         </div>
                         <input
                           className="form-control"
-                          type="datetime-local"
+                          type="date"
                           name="startDate"
                           value={formValues.startDate}
                           onChange={handleInputChange}
-                          min={new Date().toISOString().slice(0, 16)}
+                          min={new Date().toISOString().slice(0, 10)} // Restrict the date to today and future dates
                         />
                       </div>
                     </div>
@@ -877,7 +934,7 @@ const EventListing1 = () => {
                         </div>
                         <input
                           className="form-control"
-                          type="datetime-local"
+                          type="date"
                           name="endDate"
                           value={formValues.endDate}
                           onChange={handleInputChange}
@@ -885,10 +942,43 @@ const EventListing1 = () => {
                             formValues.startDate
                               ? new Date(formValues.startDate)
                                   .toISOString()
-                                  .slice(0, 16)
-                              : new Date().toISOString().slice(0, 16)
+                                  .slice(0, 10) // min is set to startDate
+                              : new Date().toISOString().slice(0, 10) // min is set to today's date
                           }
                         />
+                        <div className="flex w-full items-center gap-10">
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="startTime"
+                              className="w-full min-w-[280px] font-medium py-1"
+                            >
+                              Start Time<span className="text-red pl-1">*</span>
+                            </label>
+                            <input
+                              className="form-control"
+                              type="time"
+                              name="startTime"
+                              value={formValues.startTime}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label
+                              htmlFor="endTime"
+                              className="w-full pl-2 min-w-[280px] font-medium py-1"
+                            >
+                              End Time<span className="text-red pl-1">*</span>
+                            </label>
+                            <input
+                              className="form-control"
+                              type="time"
+                              name="endTime"
+                              value={formValues.endTime}
+                              onChange={handleInputChange}
+                              min={formValues.startTime} // Prevent end time from being earlier than start time
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -902,6 +992,7 @@ const EventListing1 = () => {
                 <div className="self-stretch flex flex-row items-start justify-center py-0 pr-[21px] pl-5">
                   <div className="relative leading-[24px] font-medium">
                     {duration}
+                    {duration2}
                   </div>
                 </div>
                 <div

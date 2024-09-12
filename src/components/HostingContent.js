@@ -12,14 +12,14 @@ const HostingContent = ({ className = "" }) => {
   }, [navigate]);
 
   const cardsData = [
-    { src: "/rectangle-13611@2x.png", label: "Satsang & Dharmic Pravachan" },
-    { src: "/rectangle-1361-1@2x.png", label: "Bhajan & Kirtan" },
-    { src: "/rectangle-1361-2@2x.png", label: "Dhram Sabha" },
-    { src: "/rectangle-1361-3@2x.png", label: "Yoga & Dhyan" },
-    { src: "/rectangle-13611@2x.png", label: "Utsav & Celebrations" },
-    { src: "/rectangle-1361-1@2x.png", label: "Adhyatmik Shivir (Spiritual Retreats)" },
-    { src: "/rectangle-1361-2@2x.png", label: "Puja & Anushthan" },
-    { src: "/rectangle-1361-3@2x.png", label: "Seva & Charity" },
+    { src: "/pravachan.jpg", label: "Satsang & Dharmic Pravachan" },
+    { src: "/bhajan.png", label: "Bhajan & Kirtan" },
+    { src: "/sabha.png", label: "Dharam Sabha" },
+    { src: "/yoga.jpg", label: "Yoga & Dhyan" },
+    { src: "/utsav.webp", label: "Utsav & Celebrations" },
+    { src: "/adhyatmik.jpg", label: "Adhyatmik Shivir (Spiritual Retreats)" },
+    { src: "/pooja.jpg", label: "Puja & Anushthan" },
+    { src: "/seva.jpg", label: "Seva & Charity" },
     { src: "/rectangle-13611@2x.png", label: "Sanskritik Karyakram (Cultural Programs)" },
     { src: "/rectangle-1361-1@2x.png", label: "Vividh (Others)" },
   ];

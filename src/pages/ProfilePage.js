@@ -235,11 +235,14 @@ const ProfilePage = () => {
     $('#' + ip).fadeOut();
   };
 
+  
+  const maxLength = 5000;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -332,10 +335,11 @@ const ProfilePage = () => {
                         id="description"
                         name="description"
                         value={formData.description}
-                        maxLength={500}
+                        maxLength={5000}
                         onChange={handleInputChange}
-                        placeholder="Enter Your Bio here... (Max: 500 Chars)"
+                        placeholder="Enter Your Bio here... (Max: 5000 Chars)"
                       />
+                       <p>{maxLength - formData.description.length} characters remaining</p>
                       <label >Edit Country:</label>
                       <Select
                         id="country"

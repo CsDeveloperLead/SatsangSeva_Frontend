@@ -204,8 +204,8 @@ const LogIn = () => {
             }
 
           </Modal>
-          <div className="w-[539px] shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-xl bg-white flex flex-col items-center justify-center pt-[34px] pb-[34px] pr-[43px] pl-11 box-border gap-[20px] max-w-full z-[6] mq750:gap-[19px] mq750:pb-[34px] mq750:pr-[21px] mq750:pl-[22px] mq750:box-border">
-            <div className="w-[539px] h-[634px] relative shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-xl bg-white hidden max-w-full" />
+          <div className="w-[539px] h-[620px] shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-xl bg-white flex flex-col items-center justify-center pt-[34px] pb-[34px] pr-[43px] pl-11 box-border gap-[20px] max-w-full z-[6] mq750:gap-[19px] mq750:pb-[34px] mq750:pr-[21px] mq750:pl-[22px] mq750:box-border">
+            <div className="w-[539px] relative shadow-[0px_4px_35px_rgba(0,_0,_0,_0.08)] rounded-xl bg-white hidden max-w-full" />
             <div className="self-stretch flex flex-col items-start justify-start gap-[22px]">
             <div className="w-full flex justify-end">
                     <Link to="/"><IoIosCloseCircleOutline size={30} /></Link>
@@ -334,7 +334,9 @@ const LogIn = () => {
             <div onClick={() => { navigate('/sign-in') }} className="flex cursor-pointer">
               <p className="m-0">No Account? &nbsp;</p>
               <p className="m-0 text-cornflowerblue">Sign up</p>
+            
             </div>
+           
           </div>
         </div>
       </section>
