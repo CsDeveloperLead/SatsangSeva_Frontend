@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import FirstFold1 from "../components/FirstFold1";
-import '../Csss/ProfilePage.css';
-import Edit from '@mui/icons-material/BorderColorTwoTone';
-import Loader from '../components/Loader';
-import Verify from '@mui/icons-material/AssignmentIndOutlined';
+import "../Csss/ProfilePage.css";
+import Edit from "@mui/icons-material/BorderColorTwoTone";
+import Loader from "../components/Loader";
+import Verify from "@mui/icons-material/AssignmentIndOutlined";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
 import { HashLink } from "react-router-hash-link";
@@ -21,29 +21,31 @@ const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const [userEvents, setUserEvents] = useState(null);
   const [userBookings, setUserBookings] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(Country.getCountryByCode('IN'));
+  const [selectedCountry, setSelectedCountry] = useState(
+    Country.getCountryByCode("IN")
+  );
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    mobile: '',
-    description: '',
-    country: 'India',
-    state: '',
-    city: '',
-    facebook: '',
-    instagram: '',
-    twitter: '',
+    name: "",
+    mobile: "",
+    description: "",
+    country: "India",
+    state: "",
+    city: "",
+    facebook: "",
+    instagram: "",
+    twitter: "",
     profileImage: null,
-    doc: null
+    doc: null,
   });
 
   useEffect(() => {
     if (userId) {
       fetchUserInfo(userId);
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   }, [userId]);
 
@@ -51,13 +53,13 @@ const ProfilePage = () => {
     setTimeout(() => {
       const windowHeight = window.innerHeight;
       const scrollPosition = windowHeight * 0.55;
-      window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+      window.scrollTo({ top: scrollPosition, behavior: "smooth" });
     }, 100);
   }, [location]);
 
   useEffect(() => {
     if (userData) {
-      setFormData(prevData => ({
+      setFormData((prevData) => ({
         ...prevData,
         name: userData.name,
         mobile: userData.phoneNumber,
@@ -68,38 +70,49 @@ const ProfilePage = () => {
         instagram: userData.social[1] ? userData.social[1].link : "",
         twitter: userData.social[2] ? userData.social[2].link : "",
       }));
-
     }
   }, [userData]);
 
   const fetchUserInfo = async (id) => {
-    await axios.get(url + "/user/bookings/" + id).then((resp) => {
-      setUserBookings(resp.data.bookings);
-    }).catch((e) => {
-      alert("Error: " + e);
-    });
-    await axios.get(url + "/user/" + id).then((resp) => {
-      setUserData(resp.data.user);
-      localStorage.setItem('userInfo', JSON.stringify({
-        email: resp.data.user.email,
-        name: resp.data.user.name,
-        contact: resp.data.user.phoneNumber,
-      }));
-    }).catch((e) => {
-      alert("Error: " + e);
-    });
-    await axios.get(url + "/user/events/" + id).then((resp) => {
-      // console.log(resp.data.events);
-      setUserEvents(resp.data.events);
-    }).catch((e) => {
-      alert("Error: " + e);
-    });
+    await axios
+      .get(url + "/user/bookings/" + id)
+      .then((resp) => {
+        setUserBookings(resp.data.bookings);
+      })
+      .catch((e) => {
+        alert("Error: " + e);
+      });
+    await axios
+      .get(url + "/user/" + id)
+      .then((resp) => {
+        setUserData(resp.data.user);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            email: resp.data.user.email,
+            name: resp.data.user.name,
+            contact: resp.data.user.phoneNumber,
+          })
+        );
+      })
+      .catch((e) => {
+        alert("Error: " + e);
+      });
+    await axios
+      .get(url + "/user/events/" + id)
+      .then((resp) => {
+        // console.log(resp.data.events);
+        setUserEvents(resp.data.events);
+      })
+      .catch((e) => {
+        alert("Error: " + e);
+      });
   };
 
   const handleLogOut = () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.removeItem('userId');
-      localStorage.removeItem('token');
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
       window.location.reload();
     }
   };
@@ -130,12 +143,18 @@ const ProfilePage = () => {
 
     const isValidSocialLink = (link, platform) => {
       switch (platform) {
-        case 'facebook':
-          return /^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9\.]+\/?$/i.test(link);
-        case 'instagram':
-          return /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9\.]+\/?$/i.test(link);
-        case 'twitter':
-          return /^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9\.]+\/?$/i.test(link);
+        case "facebook":
+          return /^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9\.]+\/?$/i.test(
+            link
+          );
+        case "instagram":
+          return /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9\.]+\/?$/i.test(
+            link
+          );
+        case "twitter":
+          return /^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9\.]+\/?$/i.test(
+            link
+          );
         default:
           return false;
       }
@@ -154,40 +173,51 @@ const ProfilePage = () => {
 
     const socialLinkErrors = await validateSocialLinks();
     if (socialLinkErrors.length > 0) {
-      alert(socialLinkErrors.join('\n'));
+      alert(socialLinkErrors.join("\n"));
       return;
     }
 
     try {
       setLoading(true);
       const headers = {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       };
       const newData = {
         name: formData.name,
         phoneNumber: formData.mobile,
         desc: formData.description,
-        location: formData.city + ", " + formData.state + ", " + formData.country,
-        social: { facebook: formData.facebook, instagram: formData.instagram, twitter: formData.twitter },
-      }
+        location:
+          formData.city + ", " + formData.state + ", " + formData.country,
+        social: {
+          facebook: formData.facebook,
+          instagram: formData.instagram,
+          twitter: formData.twitter,
+        },
+      };
       const newForm = new FormData();
-      newForm.append('updateUser', JSON.stringify(newData));
-      if (formData.profileImage) { newForm.append('images', formData.profileImage); }
+      newForm.append("updateUser", JSON.stringify(newData));
+      if (formData.profileImage) {
+        newForm.append("images", formData.profileImage);
+      }
 
-      await axios.put(url + "/user/update/" + userId, newForm, { headers }).then((resp) => {
-        alert("Profile Updated Successfully!");
-        window.location.reload();
-      }).catch((e) => {
-        console.log(e);
-        alert("Error In Updating Your details! Try later.");
-      }).finally(() => {
-        // console.log('Form Data:', formData);
-        handleCloseForm('editForm');
-        setLoading(false);
-      });
+      await axios
+        .put(url + "/user/update/" + userId, newForm, { headers })
+        .then((resp) => {
+          alert("Profile Updated Successfully!");
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("Error In Updating Your details! Try later.");
+        })
+        .finally(() => {
+          // console.log('Form Data:', formData);
+          handleCloseForm("editForm");
+          setLoading(false);
+        });
     } catch (error) {
       console.log(error);
-      handleCloseForm('editForm');
+      handleCloseForm("editForm");
     }
   };
 
@@ -197,45 +227,50 @@ const ProfilePage = () => {
     }
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        localStorage.removeItem('userId');
+        localStorage.removeItem("userId");
         alert("You have to login First!");
-        navigate('/login');
+        navigate("/login");
         setLoading(false);
         return;
       }
       const headers = {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       };
       const newForm = new FormData();
-      if (formData.doc) { newForm.append('images', formData.doc); }
+      if (formData.doc) {
+        newForm.append("images", formData.doc);
+      }
 
-      await axios.post(url + "/user/verify", newForm, { headers }).then((resp) => {
-        alert("Document Uploaded Successfully!");
-      }).catch((e) => {
-        console.log(e);
-        alert("Error In Uploading document! Try later.");
-      }).finally(() => {
-        handleCloseForm('registerForm');
-        setLoading(false);
-      });
+      await axios
+        .post(url + "/user/verify", newForm, { headers })
+        .then((resp) => {
+          alert("Document Uploaded Successfully!");
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("Error In Uploading document! Try later.");
+        })
+        .finally(() => {
+          handleCloseForm("registerForm");
+          setLoading(false);
+        });
     } catch (error) {
       console.log(error);
-      handleCloseForm('registerForm');
+      handleCloseForm("registerForm");
     }
   };
 
   const handleEditClick = (ip) => {
-    $('#' + ip).fadeIn();
+    $("#" + ip).fadeIn();
   };
 
   const handleCloseForm = (ip) => {
-    $('#' + ip).fadeOut();
+    $("#" + ip).fadeOut();
   };
 
-  
   const maxLength = 5000;
 
   const handleInputChange = (e) => {
@@ -251,26 +286,34 @@ const ProfilePage = () => {
     const fileSizeLimit = 1024 * 1024 * 2; // 2MB limit (adjust to your desired limit)
 
     if (file.size > fileSizeLimit) {
-      return alert(`File size exceeds the limit of ${fileSizeLimit / 1024 / 1024} MB`);
+      return alert(
+        `File size exceeds the limit of ${fileSizeLimit / 1024 / 1024} MB`
+      );
     } else {
-      setFormData(prevData => ({
+      setFormData((prevData) => ({
         ...prevData,
-        [e.target.name]: e.target.files[0]
+        [e.target.name]: e.target.files[0],
       }));
     }
   };
 
   const memberSince = (x) => {
     const date = new Date(x);
-    const month = date.toLocaleString('default', { month: 'long' });
+    const month = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
     return ` ${month}, ${year}`;
-  }
+  };
 
   return (
-    <div style={{ marginTop: "-5rem" }} className="w-full relative bg-white overflow-hidden flex flex-col items-start justify-start gap-[50px] leading-[normal] tracking-[normal] mq750:gap-[41px] mq450:gap-[20px] ">
+    <div
+      style={{ marginTop: "-5rem" }}
+      className="w-full relative bg-white overflow-hidden flex flex-col items-start justify-start gap-[50px] leading-[normal] tracking-[normal] mq750:gap-[41px] mq450:gap-[20px] "
+    >
       <FirstFold1 />
-      <main style={{ width: "100vw" }} className="flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
+      <main
+        style={{ width: "100vw" }}
+        className="flex flex-row items-start justify-center py-0 px-5 box-border max-w-full"
+      >
         {loading && <Loader />}
         <section className="w-[1256px] flex flex-col items-start justify-start max-w-full text-left text-21xl text-black font-poppins mq750:gap-[18px]">
           <div className="w-[1229px] flex flex-row items-start justify-start py-0 px-3.5 box-border max-w-full text-xs">
@@ -278,33 +321,69 @@ const ProfilePage = () => {
               <div className="w-[750px] flex flex-col items-start justify-start pt-px px-0 pb-0 box-border max-w-full">
                 <div className="self-stretch flex flex-row items-center justify-between max-w-full gap-[20px] mq750:flex-wrap">
                   {userData && userData.profile ? (
-                    <img className="profile-icon" src={userData.profile} alt="Profile Image" />
+                    <img
+                      className="profile-icon"
+                      src={userData.profile}
+                      alt="Profile Image"
+                    />
                   ) : (
-
-                    <div className="profile-icon">{userData ? userData.name.charAt(0).toUpperCase() : "..."}</div>
+                    <div className="profile-icon">
+                      {userData ? userData.name.charAt(0).toUpperCase() : "..."}
+                    </div>
                   )}
                   <div className="w-[650px] flex flex-col gap-2 items-start justify-center min-w-[403px] max-w-full mq750:flex-1 mq750:min-w-full">
                     <div className="flex flex-col items-start justify-start text-lg">
-                      <b style={{ fontSize: "2rem" }} className="relative">{userData && userData.name ? userData.name : "Loading..."}</b>
-                      <div style={{ fontSize: "1rem", fontWeight: "450" }} className="relative text-sm z-[1]">
-                        Member Since: {userData && userData.createdAt ? memberSince(userData.createdAt) : "Loading..."}
+                      <b style={{ fontSize: "2rem" }} className="relative">
+                        {userData && userData.name
+                          ? userData.name
+                          : "Loading..."}
+                      </b>
+                      <div
+                        style={{ fontSize: "1rem", fontWeight: "450" }}
+                        className="relative text-sm z-[1]"
+                      >
+                        Member Since:{" "}
+                        {userData && userData.createdAt
+                          ? memberSince(userData.createdAt)
+                          : "Loading..."}
                       </div>
-                      <div style={{ fontSize: "1rem" }} className="relative text-sm z-[1]">
+                      <div
+                        style={{ fontSize: "1rem" }}
+                        className="relative text-sm z-[1]"
+                      >
                         {userData && userData.location ? userData.location : ""}
                       </div>
                     </div>
                     {/* <div style={{ fontSize: "1rem" }} className="relative inline-block min-w-[121px]">
                       Contact: {userData && userData.phoneNumber ? "+91-" + userData.phoneNumber : "+91-Loading..."}
                       </div> */}
-                    <div className="self-stretch relative text-justify">
-                      {(userData && userData.desc) ? userData.desc : ""}
-                    </div>
+
                     <div className="flex gap-3">
-                      <Edit onClick={() => { handleEditClick("editForm"); handleCloseForm("registerForm") }} className="cursor-pointer mb-3" titleAccess="Update Profile" sx={{ color: "#D26600" }} />
-                      <Verify onClick={() => { handleEditClick("registerForm"); handleCloseForm("editForm") }} className="cursor-pointer mb-3" titleAccess="Register Here" sx={{ color: "#D26600", fontSize: "27px" }} />
+                      <Edit
+                        onClick={() => {
+                          handleEditClick("editForm");
+                          handleCloseForm("registerForm");
+                        }}
+                        className="cursor-pointer mb-3"
+                        titleAccess="Update Profile"
+                        sx={{ color: "#D26600" }}
+                      />
+                      <Verify
+                        onClick={() => {
+                          handleEditClick("registerForm");
+                          handleCloseForm("editForm");
+                        }}
+                        className="cursor-pointer mb-3"
+                        titleAccess="Register Here"
+                        sx={{ color: "#D26600", fontSize: "27px" }}
+                      />
                     </div>
                   </div>
-                  <div id="editForm" className="edit-form" style={{ display: 'none' }}>
+                  <div
+                    id="editForm"
+                    className="edit-form"
+                    style={{ display: "none" }}
+                  >
                     <h2 className="text-center">Edit Your Profile</h2>
                     <div>
                       <label htmlFor="name">Your Name:</label>
@@ -338,13 +417,21 @@ const ProfilePage = () => {
                         maxLength={5000}
                         onChange={handleInputChange}
                         placeholder="Enter Your Bio here... (Max: 5000 Chars)"
+                        style={{ height: "150px" }}
                       />
-                       <p>{maxLength - formData.description.length} characters remaining</p>
-                      <label >Edit Country:</label>
+                      <p>
+                        {maxLength - formData.description.length} characters
+                        remaining
+                      </p>
+                      <label>Edit Country:</label>
                       <Select
                         id="country"
                         className="w-full"
-                        placeholder={formData.country ? formData.country : "Select Your Country"}
+                        placeholder={
+                          formData.country
+                            ? formData.country
+                            : "Select Your Country"
+                        }
                         options={Country?.getAllCountries()}
                         getOptionLabel={(options) => {
                           return options["name"];
@@ -365,12 +452,16 @@ const ProfilePage = () => {
                           setSelectedCity(null);
                         }}
                       />
-                      <label >Edit State:</label>
+                      <label>Edit State:</label>
                       <Select
                         id="state"
                         className="w-full"
-                        placeholder={formData.state ? formData.state : "Select Your State"}
-                        options={State?.getStatesOfCountry(selectedCountry?.isoCode)}
+                        placeholder={
+                          formData.state ? formData.state : "Select Your State"
+                        }
+                        options={State?.getStatesOfCountry(
+                          selectedCountry?.isoCode
+                        )}
                         getOptionLabel={(options) => {
                           return options["name"];
                         }}
@@ -400,11 +491,13 @@ const ProfilePage = () => {
                         }}
                       // list="stateList"
                       /> */}
-                      <label >Edit City:</label>
+                      <label>Edit City:</label>
                       <Select
                         id="city"
                         className="w-full"
-                        placeholder={formData.city ? formData.city : "Select Your City"}
+                        placeholder={
+                          formData.city ? formData.city : "Select Your City"
+                        }
                         options={City.getCitiesOfState(
                           selectedState?.countryCode,
                           selectedState?.isoCode
@@ -476,16 +569,32 @@ const ProfilePage = () => {
                         onChange={handleFileChange}
                       />
                       <div className="flex pt-3">
-                        <button type="submit" onClick={updateUserInfo}>Update</button>
-                        <button type="button" onClick={() => { handleCloseForm('editForm') }}>Cancel</button>
+                        <button type="submit" onClick={updateUserInfo}>
+                          Update
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleCloseForm("editForm");
+                          }}
+                        >
+                          Cancel
+                        </button>
                       </div>
-
                     </div>
                   </div>
-                  <div id="registerForm" className="edit-form" style={{ display: 'none' }}>
-                    <h2 className="text-center">Upload Document To get Verified.</h2>
+                  <div
+                    id="registerForm"
+                    className="edit-form"
+                    style={{ display: "none" }}
+                  >
+                    <h2 className="text-center">
+                      Upload Document To get Verified.
+                    </h2>
                     <div>
-                      <label htmlFor="doc">Upload PDF Document (SizeLimit- 2MB):</label>
+                      <label htmlFor="doc">
+                        Upload PDF Document (SizeLimit- 2MB):
+                      </label>
                       <input
                         className="form-control"
                         type="file"
@@ -496,15 +605,26 @@ const ProfilePage = () => {
                         onChange={handleFileChange}
                       />
                       <div className="flex pt-3">
-                        <button type="submit" onClick={submitDoc}>Update</button>
-                        <button type="button" onClick={() => { handleCloseForm('registerForm') }}>Cancel</button>
+                        <button type="submit" onClick={submitDoc}>
+                          Update
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleCloseForm("registerForm");
+                          }}
+                        >
+                          Cancel
+                        </button>
                       </div>
-
                     </div>
                   </div>
                 </div>
                 <div className="self-stretch flex flex-row items-end justify-center max-w-full">
-                  <div style={{ marginLeft: "7rem" }} className="w-[414px] flex flex-row flex-wrap items-start justify-start gap-[14px] max-w-full">
+                  <div
+                    style={{ marginLeft: "7rem" }}
+                    className="w-[414px] flex flex-row flex-wrap items-start justify-start gap-[14px] max-w-full"
+                  >
                     <div className="w-[123px] flex flex-col items-start justify-start py-0 pr-[7px] pl-0 box-border">
                       <Button
                         className="self-stretch h-[33px]"
@@ -539,7 +659,12 @@ const ProfilePage = () => {
                         height: 33,
                       }}
                     >
-                      <a href="#bookings" style={{ color: "white", textDecoration: "none" }}>Bookings</a>
+                      <a
+                        href="#bookings"
+                        style={{ color: "white", textDecoration: "none" }}
+                      >
+                        Bookings
+                      </a>
                     </Button>
                     <Button
                       className="h-[33px] w-[118px]"
@@ -557,14 +682,22 @@ const ProfilePage = () => {
                         height: 33,
                       }}
                     >
-                      <a href="#events" style={{ color: "white", textDecoration: "none" }}>Events</a>
+                      <a
+                        href="#events"
+                        style={{ color: "white", textDecoration: "none" }}
+                      >
+                        Events
+                      </a>
                     </Button>
                   </div>
                 </div>
               </div>
               <div className="w-28 flex flex-col items-end justify-start gap-[45.6px]">
                 <div className="flex gap-5">
-                  <div onClick={handleCopyUrl} className="w-[26px] h-[26px] cursor-pointer rounded-8xs box-border flex flex-col items-start justify-start py-[3px] px-1 border-[1px] border-solid border-chocolate">
+                  <div
+                    onClick={handleCopyUrl}
+                    className="w-[26px] h-[26px] cursor-pointer rounded-8xs box-border flex flex-col items-start justify-start py-[3px] px-1 border-[1px] border-solid border-chocolate"
+                  >
                     <img
                       className="w-4 h-[14.4px] relative"
                       alt=""
@@ -580,10 +713,13 @@ const ProfilePage = () => {
                     </div>
                   </div>
                   <div className="flex flex-row items-end justify-start gap-[14px]">
-
                     <div className="flex flex-col items-start justify-start gap-[12px]">
                       <div className="flex flex-row items-start justify-start py-0 px-0.5">
-                        <a href={userData ? "tel:+91" + userData.phoneNumber : "#"}>
+                        <a
+                          href={
+                            userData ? "tel:+91" + userData.phoneNumber : "#"
+                          }
+                        >
                           <img
                             className="h-6 w-6 relative overflow-hidden shrink-0"
                             loading="lazy"
@@ -592,7 +728,15 @@ const ProfilePage = () => {
                           />
                         </a>
                       </div>
-                      <a href={userData && userData.social[0] ? userData.social[0].link : null} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={
+                          userData && userData.social[0]
+                            ? userData.social[0].link
+                            : null
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <img
                           className="w-7 h-7 relative overflow-hidden shrink-0"
                           loading="lazy"
@@ -610,7 +754,15 @@ const ProfilePage = () => {
                           src="/mail.svg"
                         />
                       </a>
-                      <a href={userData && userData.social[2] ? userData.social[2].link : null} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={
+                          userData && userData.social[2]
+                            ? userData.social[2].link
+                            : null
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <img
                           className="w-7 h-7 relative overflow-hidden shrink-0"
                           loading="lazy"
@@ -626,7 +778,15 @@ const ProfilePage = () => {
                         alt=""
                         src="/iconsmappin-1.svg"
                       />
-                      <a href={userData && userData.social[1] ? userData.social[1].link : null} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={
+                          userData && userData.social[1]
+                            ? userData.social[1].link
+                            : null
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <img
                           className="w-7 h-7 relative overflow-hidden shrink-0"
                           loading="lazy"
@@ -640,23 +800,44 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <div style={{ width: "100vw" }} className=" flex flex-col items-end justify-center pt-0 px-0 box-border gap-[81.5px] max-w-full lg:gap-[41px] lg:pb-[67px] lg:box-border mq750:gap-[20px] mq750:pb-11 mq750:box-border">
+          <div className="w-full text-sm mt-10">
+            <div
+              className="self-stretch relative text-justify"
+              style={{ whiteSpace: "pre-wrap" }}
+            >
+              {userData && userData.desc ? userData.desc : ""}
+            </div>
+          </div>
+          <div
+            style={{ width: "100vw" }}
+            className=" flex flex-col items-end justify-center pt-0 px-0 box-border gap-[81.5px] max-w-full lg:gap-[41px] lg:pb-[67px] lg:box-border mq750:gap-[20px] mq750:pb-11 mq750:box-border"
+          >
             <div className="self-stretch flex flex-row items-start justify-center max-w-full text-center">
               <div className="w-full flex flex-col items-end justify-start gap-[24px] max-w-full">
                 <div className="self-stretch flex flex-row items-start justify-center max-w-full">
                   <div className="w-full flex flex-col items-center justify-start gap-[15px] max-w-full">
-                    <h1 id="#bookings" className="pt-5 m-0 relative text-inherit leading-[48px] font-bold font-inherit mq1050:text-13xl mq1050:leading-[38px] mq450:text-5xl mq450:leading-[29px]">
+                    <h1
+                      id="#bookings"
+                      className="pt-5 m-0 relative text-inherit leading-[48px] font-bold font-inherit mq1050:text-13xl mq1050:leading-[38px] mq450:text-5xl mq450:leading-[29px]"
+                    >
                       <span>{`Your `}</span>
                       <span className="text-tomato">Bookings</span>
                     </h1>
-                    <p style={{ fontSize: "1rem" }}>Attend your favourite religious event</p>
-                    {userBookings &&
+                    <p style={{ fontSize: "1rem" }}>
+                      Attend your favourite religious event
+                    </p>
+                    {userBookings && (
                       <>
                         <div className="w-full flex flex-wrap justify-center gap-[62.5px] max-w-full text-center text-xs-4 text-orangered font-dm-sans lg:gap-[31px] mq750:gap-[16px]">
                           <div className="flex flex-wrap w-full gap-[28.5px] justify-center">
                             {userBookings.map((item, index) => (
-                              <GroupComponent2 key={item.event._id + index}
-                                eventCardImage={item.event.eventPosters ? `${item.event.eventPosters[0]}` : "/rectangle-12-1@2x.png"}
+                              <GroupComponent2
+                                key={item.event._id + index}
+                                eventCardImage={
+                                  item.event.eventPosters
+                                    ? `${item.event.eventPosters[0]}`
+                                    : "/rectangle-12-1@2x.png"
+                                }
                                 event={item.event}
                                 title={item.event.eventName}
                                 date={item.event.startDate}
@@ -665,7 +846,13 @@ const ProfilePage = () => {
                                 className="rounded-[20px] shadow-lg hover:scale-95 transition-transform"
                               />
                             ))}
-                            <div onClick={() => { navigate("/search-bar") }} style={{ cursor: "pointer" }} className="w-[343px] shadow-[0px_19px_47.38px_rgba(119,_115,_170,_0.1)] rounded-t-[18.95px] rounded-b-[18.95px] flex bg-gainsboro-200 flex-col items-center justify-center pt-[87px] px-[104px] pb-[118.5px] box-border relative gap-[14px] max-w-full text-base text-black mq450:pl-5 mq450:pr-5 mq450:box-border">
+                            <div
+                              onClick={() => {
+                                navigate("/search-bar");
+                              }}
+                              style={{ cursor: "pointer" }}
+                              className="w-[343px] shadow-[0px_19px_47.38px_rgba(119,_115,_170,_0.1)] rounded-t-[18.95px] rounded-b-[18.95px] flex bg-gainsboro-200 flex-col items-center justify-center pt-[87px] px-[104px] pb-[118.5px] box-border relative gap-[14px] max-w-full text-base text-black mq450:pl-5 mq450:pr-5 mq450:box-border"
+                            >
                               <div className="flex flex-row items-start justify-start py-0 px-3">
                                 <img
                                   className="h-24 w-24 relative overflow-hidden shrink-0 z-[1]"
@@ -680,23 +867,34 @@ const ProfilePage = () => {
                             </div>
                           </div>
                         </div>
-                      </>}
-                    <h1 id="events" className="pt-5 m-0 relative text-inherit leading-[48px] font-bold font-inherit mq1050:text-13xl mq1050:leading-[38px] mq450:text-5xl mq450:leading-[29px]">
+                      </>
+                    )}
+                    <h1
+                      id="events"
+                      className="pt-5 m-0 relative text-inherit leading-[48px] font-bold font-inherit mq1050:text-13xl mq1050:leading-[38px] mq450:text-5xl mq450:leading-[29px]"
+                    >
                       <span>{`Your `}</span>
                       <span className="text-tomato">Events</span>
                     </h1>
-                    <p style={{ fontSize: "1rem" }}>Host your religious event and reach a wider audience</p>
+                    <p style={{ fontSize: "1rem" }}>
+                      Host your religious event and reach a wider audience
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            {userEvents &&
+            {userEvents && (
               <>
                 <div className="w-full flex flex-wrap justify-center gap-[62.5px] max-w-full text-center text-xs-4 text-orangered font-dm-sans lg:gap-[31px] mq750:gap-[16px]">
                   <div className="flex flex-wrap w-full gap-[28.5px] justify-center">
                     {userEvents.map((e, index) => (
-                      <GroupComponent2 key={e._id + index}
-                        eventCardImage={e.eventPosters ? `${e.eventPosters[0]}` : "/rectangle-12-1@2x.png"}
+                      <GroupComponent2
+                        key={e._id + index}
+                        eventCardImage={
+                          e.eventPosters
+                            ? `${e.eventPosters[0]}`
+                            : "/rectangle-12-1@2x.png"
+                        }
                         event={e}
                         title={e.eventName}
                         date={e.startDate}
@@ -705,7 +903,11 @@ const ProfilePage = () => {
                         className="rounded-[20px] shadow-lg hover:scale-95 transition-transform"
                       />
                     ))}
-                    <HashLink to="/event-listing#form" style={{ cursor: "pointer" }} className="w-[343px] no-underline shadow-[0px_19px_47.38px_rgba(119,_115,_170,_0.1)] rounded-t-[18.95px] rounded-b-[18.95px] flex bg-gainsboro-200 flex-col items-center justify-center pt-[87px] px-[104px] pb-[118.5px] box-border relative gap-[14px] max-w-full text-base text-black mq450:pl-5 mq450:pr-5 mq450:box-border">
+                    <HashLink
+                      to="/event-listing#form"
+                      style={{ cursor: "pointer" }}
+                      className="w-[343px] no-underline shadow-[0px_19px_47.38px_rgba(119,_115,_170,_0.1)] rounded-t-[18.95px] rounded-b-[18.95px] flex bg-gainsboro-200 flex-col items-center justify-center pt-[87px] px-[104px] pb-[118.5px] box-border relative gap-[14px] max-w-full text-base text-black mq450:pl-5 mq450:pr-5 mq450:box-border"
+                    >
                       <div className="flex flex-row items-start justify-start py-0 px-3">
                         <img
                           className="h-24 w-24 relative overflow-hidden shrink-0 z-[1]"
@@ -720,7 +922,8 @@ const ProfilePage = () => {
                     </HashLink>
                   </div>
                 </div>
-              </>}
+              </>
+            )}
             {/* {(!userEvents || userEvents.length === 0) && <h1>No Events Created yet!</h1>} */}
             {/* <div className="w-[1086px] flex flex-row items-start justify-between max-w-full gap-[20px] text-goldenrod font-montserrat mq1050:flex-wrap">
               <h1 className="m-0 relative text-inherit font-bold font-inherit inline-block max-w-full mq1050:text-13xl mq450:text-5xl">

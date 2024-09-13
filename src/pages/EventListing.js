@@ -175,31 +175,63 @@ const EventListing1 = () => {
     const startDate = new Date(formValues.startDate);
     const endDate = new Date(formValues.endDate);
 
-    // Calculate the difference in time and add 1 day (to include the end date)
+    // Calculate the difference in time including endDate
     const durationInMs = endDate.getTime() - startDate.getTime();
-    const days = Math.ceil(durationInMs / (1000 * 60 * 60 * 24));
+    const days = Math.ceil(durationInMs / (1000 * 60 * 60 * 24)) + 1; // Add 1 day to include end date
 
-    // Create the output string
-    let durationText = `${days} day${days > 1 ? "s" : " and"} `;
+    // If duration is 0 or negative, don't display anything
+    if (days <= 1) {
+        setDuration(""); // Clear duration or leave empty
+        return;
+    }
+
+    // Generate the appropriate output string
+    let durationText = "";
+    if (days === 2) {
+        durationText = `1 day`; 
+    }
+    else{
+        durationText = `${days} days`; // Multiple days
+    }
 
     // Set the calculated duration
     setDuration(durationText);
+}
+
+function calculateDuration2() {
+  const startTime = formValues.startTime;
+  const endTime = formValues.endTime;
+
+  // Create Date objects for start and end times on a dummy date
+  const start = new Date(`01/01/2007 ${startTime}`);
+  const end = new Date(`01/01/2007 ${endTime}`);
+
+  // Calculate the time difference
+  const diff = end - start;
+
+  // Prevent end time from being the same as start time
+  if (diff <= 0) {
+      setDuration2(""); // No output if end time is the same or earlier than start time
+      return;
   }
 
-  function calculateDuration2() {
-    const startTime = formValues.startTime;
-    const endTime = formValues.endTime;
+  // Calculate hours and minutes from the time difference
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-    const start = new Date(`01/01/2007 ${startTime}`);
-    const end = new Date(`01/01/2007 ${endTime}`);
-
-    const diff = end - start;
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-    let duration2Text = `(${hours} hours ${minutes} minutes Each day)`;
-    setDuration2(duration2Text);
+  // Build the duration text
+  let duration2Text = `${hours} hour${hours > 1 ? 's' : ''}`;
+  
+  // Only include minutes if they are not 0
+  if (minutes > 0) {
+      duration2Text += ` ${minutes} minute${minutes > 1 ? 's' : ''}`;
   }
+
+
+  // Set the calculated duration
+  setDuration2(duration2Text);
+}
+
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -992,8 +1024,7 @@ const EventListing1 = () => {
               <div className="w-[426px] flex flex-col items-start justify-start gap-[12px] max-w-full">
                 <div className="self-stretch flex flex-row items-start justify-center py-0 pr-[21px] pl-5">
                   <div className="relative leading-[24px] font-medium">
-                    {duration}
-                    {duration2}
+                   <p>{duration} {" "} {"("}{duration2}{")"}{" "}Long Event  </p>
                   </div>
                 </div>
                 <div
