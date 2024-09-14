@@ -110,8 +110,8 @@ const FrameComponent11 = ({ event = null }) => {
       .join(" ");
   };
   return (
-    <div className="mx-10 flex flex-col justify-between">
-      <div className="flex items-end">
+    <div className="mx-10 flex flex-col gap-10">
+      <div className="flex mq450:flex-col items-end">
         <div className="event-left py-2">
           <div className="event-details p-0 my-2 flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -245,7 +245,7 @@ const FrameComponent11 = ({ event = null }) => {
         </div>
       </div>
       <div>
-        <p className="py-2 text-justify mt-6">{event?.eventDesc}</p>
+        <p className="py-2 text-justify mt-6" style={{ whiteSpace: "pre-wrap" }}>{event?.eventDesc}</p>
       </div>
     </div>
   );

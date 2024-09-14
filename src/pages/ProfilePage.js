@@ -316,8 +316,8 @@ const ProfilePage = () => {
       >
         {loading && <Loader />}
         <section className="w-[1256px] flex flex-col items-start justify-start max-w-full text-left text-21xl text-black font-poppins mq750:gap-[18px]">
-          <div className="w-[1229px] flex flex-row items-start justify-start py-0 px-3.5 box-border max-w-full text-xs">
-            <div className="flex-1 flex flex-row items-start justify-between max-w-full gap-[20px] mq1050:flex-wrap">
+          <div className="mq450:w-full w-[1229px] flex mq450:flex-col mq450:items-center flex-row items-start justify-start py-0 px-3.5 box-border max-w-full text-xs">
+            <div className="flex-1 flex flex-row mq450:justify-center items-start justify-between max-w-full gap-[20px] mq1050:flex-wrap">
               <div className="w-[750px] flex flex-col items-start justify-start pt-px px-0 pb-0 box-border max-w-full">
                 <div className="self-stretch flex flex-row items-center justify-between max-w-full gap-[20px] mq750:flex-wrap">
                   {userData && userData.profile ? (
@@ -620,10 +620,10 @@ const ProfilePage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="self-stretch flex flex-row items-end justify-center max-w-full">
+                <div className="self-stretch flex mq450:flex-col items-end justify-center max-w-full">
                   <div
                     style={{ marginLeft: "7rem" }}
-                    className="w-[414px] flex flex-row flex-wrap items-start justify-start gap-[14px] max-w-full"
+                    className="w-[414px] flex flex-row flex-wrap mq450:items-center mq450:justify-center justify-start gap-[14px] max-w-full"
                   >
                     <div className="w-[123px] flex flex-col items-start justify-start py-0 pr-[7px] pl-0 box-border">
                       <Button
@@ -692,7 +692,7 @@ const ProfilePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-28 flex flex-col items-end justify-start gap-[45.6px]">
+              <div className="w-28 flex flex-col items-center  justify-center gap-[45.6px]">
                 <div className="flex gap-5">
                   <div
                     onClick={handleCopyUrl}
@@ -706,9 +706,9 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
-                <div className="self-stretch flex flex-col items-start justify-start gap-[12px]">
-                  <div className="self-stretch flex flex-row items-start justify-end">
-                    <div className="relative inline-block min-w-[70px]">
+                <div className="flex flex-col justify-center gap-4">
+                  <div className="">
+                    <div className="flex justify-center">
                       Contact On
                     </div>
                   </div>
