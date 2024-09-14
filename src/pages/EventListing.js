@@ -291,8 +291,10 @@ function calculateDuration2() {
       ]
         .filter(Boolean)
         .join(", "),
-      startDate: formValues.startDate,
-      endDate: formValues.endDate,
+        startDate: formValues.startDate,
+        endDate: formValues.endDate,
+        startTime: formValues.startTime,
+        endTime: formValues.endTime,
     };
     console.log(newData);
     const error = validateEventInputs(newData);
@@ -315,7 +317,7 @@ function calculateDuration2() {
       formValues.eventImages.slice(0, 3).forEach((image) => {
         formData.append("images", image);
       });
-      console.log(formData);
+     
       await axios
         .post(url + "/events", formData, { headers })
         .then((resp) => {
@@ -339,6 +341,7 @@ function calculateDuration2() {
       setLoading(false);
     }
   };
+  
 
   function validateEventInputs(inputs) {
     const errors = {};

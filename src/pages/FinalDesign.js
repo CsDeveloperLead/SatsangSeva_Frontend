@@ -18,12 +18,27 @@ const FinalDesign = () => {
   }, []);
 
   const fetchBlogs = async () => {
-    await axios.get(url + "/admin/blog").then((resp) => {
-      setBlogs(resp.data.blogs);
-    }).catch((e) => {
-      console.log("Error in fetching Blogs : " + e);
-    });
+    try {
+      const resp = await axios.get(url + "/admin/blog");
+      setBlogs(resp.data.blogs); // Assuming `resp.data.blogs` is the correct structure
+    } catch (e) {
+      // Detailed error handling
+      if (e.response) {
+        // Server responded with a status other than 2xx
+        console.error(`Error ${e.response.status}: ${e.response.data.message || 'Error fetching blogs'}`);
+        if (e.response.status === 404) {
+          console.log("Resource not found. Please check the API endpoint.");
+        }
+      } else if (e.request) {
+        // Request was made, but no response received
+        console.error("No response received from the server. Request details:", e.request);
+      } else {
+        // Something else happened while setting up the request
+        console.error("Error:", e.message);
+      }
+    }
   };
+  
 
   const handleLoadMore = () => {
     const newVisibleBlogs = visibleBlogs + 6;
