@@ -100,18 +100,35 @@ const EventListing = ({ className = "" }) => {
 
   const fetchNearBy = async () => {
     setLoading(true);
-    await axios.get(url + "/event/nearby?long=" + position.longitude + "&lat=" + position.latitude).then((resp) => {
-      setEvents(resp.data.events);
-      setFilteredEvents(resp.data.events);
-      // console.log(resp.data);
-    }).catch((e) => {
-      console.log(e);
-      alert("No Events Found");
-      setEvents(null);
-    }).finally(() => {
-      setLoading(false);
-    });
+    await axios.get(url + "/event/nearby?long=" + position.longitude + "&lat=" + position.latitude)
+      .then((resp) => {
+        // Get today's date
+        const today = new Date();
+  
+        // Filter events where endDate is greater than today
+        const validEvents = resp.data.events.filter(event => {
+          const eventEndDate = new Date(event.endDate);
+          return eventEndDate >= today;
+        });
+  
+        if (validEvents.length > 0) {
+          setEvents(validEvents);
+          setFilteredEvents(validEvents);
+        } else {
+          alert("No Upcoming Events Found");
+          setEvents(null);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("No Events Found");
+        setEvents(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
+  
 
 
   // const fetchEvents = async () => {
