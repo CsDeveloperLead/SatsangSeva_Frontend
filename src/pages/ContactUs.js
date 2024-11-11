@@ -128,7 +128,7 @@ function ContactUs() {
                             <label htmlFor="msg">Message</label>
                             <textarea placeholder='Write your message...' className="form-control" id="msg" name="message" rows="5" value={formData.msg} maxLength={1000} onChange={handleChange}></textarea>
                         </div>
-                        <button type='submit' onClick={handleSubmit} className="btn px-4 btn-lg" style={{ backgroundColor: "#FFCBA4" }}>Send</button>
+                        <button type='submit' onClick={handleSubmit} className="btn px-4 btn-lg" style={{ backgroundColor: "#FFCBA4" }}>Send mail</button>
                     </div>
                 </div>
             </section>
