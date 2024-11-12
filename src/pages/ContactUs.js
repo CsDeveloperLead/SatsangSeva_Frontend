@@ -217,7 +217,7 @@ const ContactUs = () => {
                   id="email"
                   name="email"
                  
-                  placeholder="Enter Email"
+                  placeholder="Enter Email Address"
                 />
               </div>
               <div className="col">
