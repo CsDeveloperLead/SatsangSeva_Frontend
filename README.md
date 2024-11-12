@@ -25,4 +25,4 @@ REACT_APP_ADMIN=Your Admin Email
 REACT_APP_ADMIN_KEY=Your Admin Password
 
 # Secret Key (same as in backend .env)
-REACT_APP_SECRET_KEY=Same as in your Backend .env file
+REACT_APP_SECRET_KEY=Same as in your Backend .env file# satsangseva_Frontend
