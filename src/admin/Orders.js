@@ -190,6 +190,8 @@ const Orders = () => {
               <th scope="col">Name</th>
               <th scope="col">Host</th>
               {/* <th scope="col">Location</th> */}
+              <th>Start Date</th>
+              <th>End Date</th>
               <th scope="col">Price</th>
               <th scope="col">Bookings</th>
               <th scope="col">Edit</th>
@@ -201,9 +203,31 @@ const Orders = () => {
           <tbody>
             {events.length ? events.map(event => (
               <tr key={event._id}>
-                <td>{event._id}</td>
+               <td>{event._id.slice(-5)}</td>
                 <td>{event.eventName}</td>
                 <td>{event.hostName}</td>
+                <td>
+                    {new Date(event.startDate).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}{" "}
+                    {/* {new Date(event.startTime).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })} */}
+                  </td>
+                  <td>
+                    {new Date(event.endDate).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}{" "}
+                    {/* {new Date(event.endTime).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })} */}
+                  </td>
                 {/* <td><a href={event.location} target="_blank" rel="noopener noreferrer">Map</a></td> */}
                 <td>{event.eventPrice === '0' ? 'Free' : `₹${event.eventPrice}`}</td>
                 <td>{event.bookings.length > 0 ? <button onClick={() => handleBookingsClick(event._id, event.eventName)}>See Bookings</button> : "NA"}</td>
@@ -242,6 +266,8 @@ const Orders = () => {
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Host</th>
+              <th>Start Date</th>
+              <th>End Date</th>
               {/* <th scope="col">Location</th> */}
               <th scope="col">Price</th>
               <th scope="col">Bookings</th>
@@ -254,9 +280,31 @@ const Orders = () => {
           <tbody>
             {pastEvents.map(event => (
               <tr key={event._id}>
-                <td>{event._id}</td>
+                <td>{event._id.slice(-5)}</td>
                 <td>{event.eventName}</td>
                 <td>{event.hostName}</td>
+                <td>
+                    {new Date(event.startDate).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}{" "}
+                    {/* {new Date(event.startTime).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })} */}
+                  </td>
+                  <td>
+                    {new Date(event.endDate).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}{" "}
+                    {/* {new Date(event.endTime).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })} */}
+                  </td>
                 {/* <td><a href={event.location} target="_blank" rel="noopener noreferrer">Map</a></td> */}
                 <td>{event.eventPrice === '0' ? 'Free' : `₹${event.eventPrice}`}</td>
                 <td><button onClick={() => handleBookingsClick(event._id, event.eventName)}>See Bookings</button></td>

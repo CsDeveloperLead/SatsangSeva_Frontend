@@ -140,7 +140,7 @@ const AddProduct = () => {
 
               return (
                 <tr key={user._id}>
-                  <td>{user._id}</td>
+                  <td>{user._id.slice(-5)}</td>
                   <td>{user.name}</td>
                   <td>{user.userType}</td>
                   <td>{user.email}</td>
